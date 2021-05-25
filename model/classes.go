@@ -1,24 +1,24 @@
 package model
 
-type characterClass struct {
-	name     string
-	strength int
-	agility  int
-	charisma int
+type CharacterClass struct {
+	Name     string
+	Strength int
+	Agility  int
+	Charisma int
 }
 
-var barbarian = &characterClass{
-	name:     "Barbarian",
-	strength: 12,
-	agility:  5,
-	charisma: 5,
+var barbarian = &CharacterClass{
+	Name:     "Barbarian",
+	Strength: 12,
+	Agility:  5,
+	Charisma: 5,
 }
 
-var archMage = &characterClass{
-	name:     "Arch Mage",
-	strength: 4,
-	agility:  8,
-	charisma: 14,
+var archMage = &CharacterClass{
+	Name:     "Arch Mage",
+	Strength: 4,
+	Agility:  8,
+	Charisma: 14,
 }
 
-var classes = []characterClass{*barbarian, *archMage}
+var Classes = []CharacterClass{*barbarian, *archMage}
