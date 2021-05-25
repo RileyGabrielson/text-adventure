@@ -38,13 +38,15 @@ func DisplayCharacterDetails(player *playerData) {
 	fmt.Println("Your name is:", player.name)
 	fmt.Println("Your class is:", player.class.Name)
 	fmt.Println("  Strength:", player.class.Strength)
-	fmt.Println("  Agility:", player.class.Agility)
+	fmt.Println("  Agility: ", player.class.Agility)
 	fmt.Println("  Charisma:", player.class.Charisma)
 }
 
 func CharacterCreation(player *playerData) {
+	AssignName(player)
+
 	for {
-		err := CreateCharacter(player)
+		err := AssignClass(player)
 		if err == nil {
 			break
 		} else {
@@ -56,7 +58,7 @@ func CharacterCreation(player *playerData) {
 	fmt.Println()
 	fmt.Println("Continue? [Y/N]")
 	text := GetPlayerInput()
-	if text == "y" || text == "Y" {
+	if text == "y" || text == "Y" || text == "yes" ||  {
 		return
 	} else {
 		ClearScreen()
@@ -73,13 +75,15 @@ func GetPlayerInput() string {
 	return text
 }
 
-func CreateCharacter(player *playerData) error {
-
+func AssignName(player *playerData) {
 	fmt.Println()
 	fmt.Println("Enter your character's name:")
 	fmt.Print(inputMarker)
 	text := GetPlayerInput()
 	player.name = text
+}
+
+func AssignClass(player *playerData) error {
 
 	fmt.Println()
 	fmt.Println("Choose Your character's class:")
@@ -88,7 +92,7 @@ func CreateCharacter(player *playerData) error {
 	}
 	fmt.Print(inputMarker)
 
-	text = GetPlayerInput()
+	text := GetPlayerInput()
 	if _, err := strconv.Atoi(text); err == nil {
 
 		index, _ := strconv.Atoi(text)
