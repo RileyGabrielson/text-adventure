@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/RileyGabrielson/textAdventure/book1"
+	"github.com/RileyGabrielson/textAdventure/commands"
 	"github.com/RileyGabrielson/textAdventure/model"
 )
 
@@ -23,6 +25,7 @@ func main() {
 	DisplayWelcome()
 	player := playerData{}
 	CharacterCreation(&player)
+	StartBook(&player, &book1.Book1)
 
 }
 
@@ -40,6 +43,7 @@ func DisplayCharacterDetails(player *playerData) {
 	fmt.Println("  Strength:", player.class.Strength)
 	fmt.Println("  Agility: ", player.class.Agility)
 	fmt.Println("  Charisma:", player.class.Charisma)
+	fmt.Println("  Intelligence:", player.class.Intelligence)
 }
 
 func CharacterCreation(player *playerData) {
@@ -58,7 +62,7 @@ func CharacterCreation(player *playerData) {
 	fmt.Println()
 	fmt.Println("Continue? [Y/N]")
 	text := GetPlayerInput()
-	if text == "y" || text == "Y" || text == "yes" ||  {
+	if _, containsKey := commands.YesCommands[text]; containsKey {
 		return
 	} else {
 		ClearScreen()
@@ -113,4 +117,29 @@ func ClearScreen() {
 	cmd := exec.Command("cmd", "/c", "cls")
 	cmd.Stdout = os.Stdout
 	cmd.Run()
+}
+
+func StartBook(player *playerData, book *model.Book) {
+	fmt.Println()
+	fmt.Println(book.Title)
+	fmt.Println(book.Description)
+	StartChapter(player, &book.Chapters[0])
+}
+
+func StartChapter(player *playerData, chapter *model.Chapter) {
+	fmt.Println()
+	fmt.Println(chapter.Title)
+	fmt.Println(chapter.Description)
+	StartChoice(player, &chapter.StartingChoice)
+}
+
+func StartChoice(player *playerData, choice *model.Choice) {
+	fmt.Println()
+	fmt.Println(choice.Location)
+	fmt.Println(choice.Description)
+	for i := 0; i < len(choice.Options); i++ {
+		for i := 0; i < len(model.Classes); i++ {
+			fmt.Println(" ", strconv.Itoa(i)+".", choice.Options[i].Description)
+		}
+	}
 }
