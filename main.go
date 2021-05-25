@@ -72,6 +72,7 @@ func CharacterCreation(player *playerData) {
 }
 
 func GetPlayerInput() string {
+	fmt.Print(inputMarker)
 	reader := bufio.NewReader(os.Stdin)
 	text, _ := reader.ReadString('\n')
 	text = strings.TrimSuffix(text, "\n")
@@ -79,10 +80,21 @@ func GetPlayerInput() string {
 	return text
 }
 
+func GetPlayerInt() (int, error) {
+	text := GetPlayerInput()
+	if _, err := strconv.Atoi(text); err == nil {
+
+		playerInt, _ := strconv.Atoi(text)
+		return playerInt, nil
+
+	} else {
+		return -1, errors.New("invalid player input")
+	}
+}
+
 func AssignName(player *playerData) {
 	fmt.Println()
 	fmt.Println("Enter your character's name:")
-	fmt.Print(inputMarker)
 	text := GetPlayerInput()
 	player.name = text
 }
@@ -94,23 +106,18 @@ func AssignClass(player *playerData) error {
 	for i := 0; i < len(model.Classes); i++ {
 		fmt.Println(" ", strconv.Itoa(i)+".", model.Classes[i].Name)
 	}
-	fmt.Print(inputMarker)
 
-	text := GetPlayerInput()
-	if _, err := strconv.Atoi(text); err == nil {
-
-		index, _ := strconv.Atoi(text)
+	index, err := GetPlayerInt()
+	if err != nil {
+		return err
+	} else {
 		if index >= 0 && index < len(model.Classes) {
 			player.class = model.Classes[index]
 			return nil
 		} else {
 			return errors.New("invalid index")
 		}
-
-	} else {
-		return errors.New("invalid player input")
 	}
-
 }
 
 func ClearScreen() {
@@ -120,6 +127,7 @@ func ClearScreen() {
 }
 
 func StartBook(player *playerData, book *model.Book) {
+	ClearScreen()
 	fmt.Println()
 	fmt.Println(book.Title)
 	fmt.Println(book.Description)
@@ -137,9 +145,28 @@ func StartChoice(player *playerData, choice *model.Choice) {
 	fmt.Println()
 	fmt.Println(choice.Location)
 	fmt.Println(choice.Description)
+
+	if len(choice.Options) == 0 {
+		return
+	}
+
 	for i := 0; i < len(choice.Options); i++ {
-		for i := 0; i < len(model.Classes); i++ {
-			fmt.Println(" ", strconv.Itoa(i)+".", choice.Options[i].Description)
+		fmt.Println(" ", strconv.Itoa(i)+".", choice.Options[i].Decision)
+	}
+
+	index, err := GetPlayerInt()
+	if err != nil {
+		fmt.Println()
+		fmt.Println(err.Error())
+		StartChoice(player, choice)
+	} else {
+		if index >= 0 && index < len(choice.Options) {
+			StartChoice(player, &choice.Options[index])
+		} else {
+			fmt.Println()
+			fmt.Println("Invalid Index")
+			StartChoice(player, choice)
 		}
 	}
+
 }

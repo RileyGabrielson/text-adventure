@@ -12,13 +12,14 @@ var IntroductionChapter = model.Chapter{
 
 var theForest = model.Choice{
 	Location: "Elenthal Forest",
-	Description: "Test text 1 " +
-		"Test text 2",
+	Decision: "",
+	Description: "The forest is littered with leaves and shadow. " +
+		"Before you lies a path to a cave.",
 	Options: []model.Choice{theCave},
 }
 
 var theCave = model.Choice{
-	Location: "Elenthal Cave",
-	Description: "Test text 1 " +
-		"Test text 2",
+	Location:    "Elenthal Cave",
+	Decision:    "Journey to the Cave",
+	Description: "This is a really stinky cave. ",
 }
