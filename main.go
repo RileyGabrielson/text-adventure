@@ -162,6 +162,7 @@ func StartChoice(player *playerData, choice *model.Choice) {
 	} else {
 		if index >= 0 && index < len(choice.Options) {
 			StartChoice(player, &choice.Options[index])
+			//New Comment
 		} else {
 			fmt.Println()
 			fmt.Println("Invalid Index")
