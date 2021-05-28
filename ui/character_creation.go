@@ -1,6 +1,14 @@
-package main
+package ui
 
-func AssignClass(player *playerData) error {
+import (
+	"fmt"
+	"strconv"
+	"errors"
+	"github.com/RileyGabrielson/text-adventure/model"
+	"github.com/RileyGabrielson/text-adventure/commands"
+)
+
+func AssignClass(player *model.PlayerData) error {
 
 	fmt.Println()
 	fmt.Println("Choose Your character's class:")
@@ -13,7 +21,7 @@ func AssignClass(player *playerData) error {
 		return err
 	} else {
 		if index >= 0 && index < len(model.Classes) {
-			player.class = model.Classes[index]
+			player.Class = model.Classes[index]
 			return nil
 		} else {
 			return errors.New("invalid index")
@@ -21,7 +29,7 @@ func AssignClass(player *playerData) error {
 	}
 }
 
-func NewCharacter(player *playerData) {
+func NewCharacter(player *model.PlayerData) {
 	AssignName(player)
 
 	for {
@@ -41,7 +49,14 @@ func NewCharacter(player *playerData) {
 		return
 	} else {
 		ClearScreen()
-		CharacterCreation(player)
+		NewCharacter(player)
 	}
 
+}
+
+func AssignName(player *model.PlayerData) {
+	fmt.Println()
+	fmt.Println("Enter your character's name:")
+	text := GetPlayerInput()
+	player.Name = text
 }

@@ -1,4 +1,13 @@
-package main
+package ui
+
+import (
+	"fmt"
+	"os"
+	"strconv"
+	"bufio"
+	"strings"
+	"errors"
+)
 
 var inputMarker = "-> "
 
