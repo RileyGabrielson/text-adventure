@@ -1,28 +1,20 @@
 package main
 
 import (
-	"bufio"
-	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"strconv"
-	"strings"
 
 	"github.com/RileyGabrielson/textAdventure/book1"
-	"github.com/RileyGabrielson/textAdventure/commands"
 	"github.com/RileyGabrielson/textAdventure/model"
 )
-
-
-
 
 func main() {
 	DisplayWelcome()
 	player := playerData{}
-	CharacterCreation(&player)
+	NewCharacter(&player)
 	StartBook(&player, &book1.Book1)
-
 }
 
 func DisplayWelcome() {
@@ -42,58 +34,11 @@ func DisplayCharacterDetails(player *playerData) {
 	fmt.Println("  Intelligence:", player.class.Intelligence)
 }
 
-func CharacterCreation(player *playerData) {
-	AssignName(player)
-
-	for {
-		err := AssignClass(player)
-		if err == nil {
-			break
-		} else {
-			fmt.Println(err.Error())
-		}
-	}
-
-	DisplayCharacterDetails(player)
-	fmt.Println()
-	fmt.Println("Continue? [Y/N]")
-	text := GetPlayerInput()
-	if _, containsKey := commands.YesCommands[text]; containsKey {
-		return
-	} else {
-		ClearScreen()
-		CharacterCreation(player)
-	}
-
-}
-
-
 func AssignName(player *playerData) {
 	fmt.Println()
 	fmt.Println("Enter your character's name:")
 	text := GetPlayerInput()
 	player.name = text
-}
-
-func AssignClass(player *playerData) error {
-
-	fmt.Println()
-	fmt.Println("Choose Your character's class:")
-	for i := 0; i < len(model.Classes); i++ {
-		fmt.Println(" ", strconv.Itoa(i)+".", model.Classes[i].Name)
-	}
-
-	index, err := GetPlayerInt()
-	if err != nil {
-		return err
-	} else {
-		if index >= 0 && index < len(model.Classes) {
-			player.class = model.Classes[index]
-			return nil
-		} else {
-			return errors.New("invalid index")
-		}
-	}
 }
 
 func ClearScreen() {
