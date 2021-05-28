@@ -6,13 +6,15 @@ import (
 	"os/exec"
 	"strconv"
 
-	"github.com/RileyGabrielson/textAdventure/book1"
-	"github.com/RileyGabrielson/textAdventure/model"
+	"github.com/RileyGabrielson/text-adventure/book1"
+	"github.com/RileyGabrielson/text-adventure/model"
+	"github.com/RileyGabrielson/text-adventure/ui"
+
 )
 
 func main() {
 	DisplayWelcome()
-	player := playerData{}
+	player := model.PlayerData{}
 	NewCharacter(&player)
 	StartBook(&player, &book1.Book1)
 }
@@ -24,21 +26,21 @@ func DisplayWelcome() {
 	fmt.Println()
 }
 
-func DisplayCharacterDetails(player *playerData) {
+func DisplayCharacterDetails(player *model.PlayerData) {
 	fmt.Println()
-	fmt.Println("Your name is:", player.name)
-	fmt.Println("Your class is:", player.class.Name)
-	fmt.Println("  Strength:", player.class.Strength)
-	fmt.Println("  Agility: ", player.class.Agility)
-	fmt.Println("  Charisma:", player.class.Charisma)
-	fmt.Println("  Intelligence:", player.class.Intelligence)
+	fmt.Println("Your name is:", player.Name)
+	fmt.Println("Your class is:", player.Class.Name)
+	fmt.Println("  Strength:", player.Class.Strength)
+	fmt.Println("  Agility: ", player.Class.Agility)
+	fmt.Println("  Charisma:", player.Class.Charisma)
+	fmt.Println("  Intelligence:", player.Class.Intelligence)
 }
 
-func AssignName(player *playerData) {
+func AssignName(player *model.PlayerData) {
 	fmt.Println()
 	fmt.Println("Enter your character's name:")
-	text := GetPlayerInput()
-	player.name = text
+	text := ui.GetPlayerInput()
+	player.Name = text
 }
 
 func ClearScreen() {
@@ -47,7 +49,7 @@ func ClearScreen() {
 	cmd.Run()
 }
 
-func StartBook(player *playerData, book *model.Book) {
+func StartBook(player *model.PlayerData, book *model.Book) {
 	ClearScreen()
 	fmt.Println()
 	fmt.Println(book.Title)

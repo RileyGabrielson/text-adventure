@@ -1,7 +1,7 @@
 package book1
 
 import (
-	"github.com/RileyGabrielson/textAdventure/model"
+	"github.com/RileyGabrielson/text-adventure/model"
 )
 
 var IntroductionChapter = model.Chapter{

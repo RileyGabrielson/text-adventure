@@ -1,6 +1,6 @@
 package model
 
-type playerData struct {
-	name  string
-	class CharacterClass
+type PlayerData struct {
+	Name  string
+	Class CharacterClass
 }
