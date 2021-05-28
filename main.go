@@ -14,12 +14,8 @@ import (
 	"github.com/RileyGabrielson/textAdventure/model"
 )
 
-type playerData struct {
-	name  string
-	class model.CharacterClass
-}
 
-var inputMarker = "-> "
+
 
 func main() {
 	DisplayWelcome()
@@ -71,26 +67,6 @@ func CharacterCreation(player *playerData) {
 
 }
 
-func GetPlayerInput() string {
-	fmt.Print(inputMarker)
-	reader := bufio.NewReader(os.Stdin)
-	text, _ := reader.ReadString('\n')
-	text = strings.TrimSuffix(text, "\n")
-	text = strings.TrimSuffix(text, "\r")
-	return text
-}
-
-func GetPlayerInt() (int, error) {
-	text := GetPlayerInput()
-	if _, err := strconv.Atoi(text); err == nil {
-
-		playerInt, _ := strconv.Atoi(text)
-		return playerInt, nil
-
-	} else {
-		return -1, errors.New("invalid player input")
-	}
-}
 
 func AssignName(player *playerData) {
 	fmt.Println()
