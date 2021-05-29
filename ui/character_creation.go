@@ -51,7 +51,6 @@ func NewCharacter(player *model.PlayerData) {
 		ClearScreen()
 		NewCharacter(player)
 	}
-
 }
 
 func AssignName(player *model.PlayerData) {
